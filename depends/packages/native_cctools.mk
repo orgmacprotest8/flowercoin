@@ -13,10 +13,6 @@ $(package)_dyld_download_file=dyld-195.5.tar.gz
 $(package)_dyld_download_path=http://www.opensource.apple.com/tarballs/dyld
 $(package)_dyld_file_name=$($(package)_dyld_download_file)
 $(package)_dyld_sha256_hash=2cf0484c87cf79b606b351a7055a247dae84093ae92c747a74e0cde2c8c8f83c
-$(package)_toolchain4_download_file=10cc648683617cca8bcbeae507888099b41b530c.tar.gz
-$(package)_toolchain4_download_path=https://github.com/mingwandroid/toolchain4/archive
-$(package)_toolchain4_file_name=toolchain4-1.tar.gz
-$(package)_toolchain4_sha256_hash=18406961fd4a1ec5c7ea35c91d6a80a2f8bb797a2bd243a610bd75e13eff9aca
 $(package)_clang_download_file=clang+llvm-3.2-x86-linux-ubuntu-12.04.tar.gz
 $(package)_clang_download_path=http://llvm.org/releases/3.2
 $(package)_clang_file_name=clang-llvm-3.2-x86-linux-ubuntu-12.04.tar.gz
@@ -26,8 +22,7 @@ define $(package)_fetch_cmds
 $(call fetch_file,$(package),$($(package)_download_path),$($(package)_download_file),$($(package)_file_name),$($(package)_sha256_hash)) && \
 $(call fetch_file,$(package),$($(package)_ld64_download_path),$($(package)_ld64_download_file),$($(package)_ld64_file_name),$($(package)_ld64_sha256_hash)) && \
 $(call fetch_file,$(package),$($(package)_dyld_download_path),$($(package)_dyld_download_file),$($(package)_dyld_file_name),$($(package)_dyld_sha256_hash)) && \
-$(call fetch_file,$(package),$($(package)_clang_download_path),$($(package)_clang_download_file),$($(package)_clang_file_name),$($(package)_clang_sha256_hash)) && \
-$(call fetch_file,$(package),$($(package)_toolchain4_download_path),$($(package)_toolchain4_download_file),$($(package)_toolchain4_file_name),$($(package)_toolchain4_sha256_hash))
+$(call fetch_file,$(package),$($(package)_clang_download_path),$($(package)_clang_download_file),$($(package)_clang_file_name),$($(package)_clang_sha256_hash))
 endef
 
 define $(package)_set_vars
@@ -39,7 +34,6 @@ $(package)_ldflags+=-m32 -Wl,-rpath=\\$$$$$$$$\$$$$$$$$ORIGIN/../lib
 $(package)_ldflags+=-L$$(native_cctools_extract_dir)/clang+llvm-3.2-x86-linux-ubuntu-12.04/lib
 endef
 define $(package)_extract_cmds
-  tar --strip-components=1 -xf $($(package)_source_dir)/$($(package)_toolchain4_file_name) && \
   ln -sf $($(package)_source) cctools2odcctools/$($(package)_file_name) && \
   ln -sf $($(package)_source_dir)/$($(package)_ld64_file_name) cctools2odcctools/$($(package)_ld64_file_name) && \
   ln -sf $($(package)_source_dir)/$($(package)_dyld_file_name) cctools2odcctools/$($(package)_dyld_file_name) && \
